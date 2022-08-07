@@ -1,5 +1,0 @@
-<?php
-include '../../env.php';
-
-
-?>
