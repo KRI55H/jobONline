@@ -16,15 +16,15 @@ if(isset($_SESSION['username'])){
     <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
-    <div class="login-form container">
-        <div class="container d-flex justify-content-center align-items-center">
+    <div class="container d-flex justify-content-center align-items-center" style="width: 100vh; height: 100vh;">
+        <div class="container bg-dark text-light p-4" style="width: 50vh; border-radius: 4vh;">
             <form id="login" class="p-4">
                 <div class="mb-3">
                     <h4>Welcome back</h4>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="<?="example@email.com"?>">
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1">
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>

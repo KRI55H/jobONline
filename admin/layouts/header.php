@@ -25,7 +25,7 @@
             <li class="nav-item"><a class="nav-link text-light" href="./index.php">DASHBOARD</a></li>
             <li class="nav-item"><a class="nav-link text-light" href="./users.php">USERS</a></li>
             <li class="nav-item"><a class="nav-link text-light" href="./jobs.php">JOBS</a></li>
-            <li class="nav-item"><a class="nav-link text-light" href="./jobs.php">CATEGORY</a></li>
+            <li class="nav-item"><a class="nav-link text-light" href="./category.php">CATEGORY</a></li>
         </ul>            
     </div>
     <a href="../admin/logout.php" class="btn btn-primary shadow-none rounded-3 ps-4 pe-4">LOGOUT</a>
