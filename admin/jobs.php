@@ -45,16 +45,17 @@
         </div>
         <?php }?>
     </div>
+
     <!-- Modal -->
     <div class="modal fade" id="add-job" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header border-bottom-0">
                 <span class="text-center fs-4 ps-2"> ADD NEW JOB</span>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" id="closeModel" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3 p-2" method="post" id="addEditJob">
+                <form class="row g-3 p-2" method="post" id="addJob">
                     <div class="col-md-8">
                         <label for="inputTitle" class="form-label">Title</label>
                         <input type="text" class="form-control" name="title" id="inputTitle">
@@ -68,17 +69,17 @@
                         <input type="text" class="form-control" name="description" id="inputDescription">
                     </div>
                     <div class="col-md-8">
-                        <label for="inputState" class="form-label">Category</label>
-                        <select id="inputState" class="form-select" name="category">
-                        <option value="" selected disabled>Choose an option</option>
-                        <?php 
-                            $data = mysqli_query($db_connect,"select * from category where is_active = '1'");
-                            $rows = mysqli_fetch_all($data,true);
-                            $i = 1;
-                            foreach($rows as $row){
-                        ?>
-                        <option value="<?=$row['id']?>"><?=$row['name']?></option>
-                        <?php }?>
+                        <label for="inputCategory" class="form-label">Category</label>
+                        <select id="inputCategory" class="form-select" name="job_category">
+                            <option value="" selected disabled>Choose an option</option>
+                            <?php 
+                                $data = mysqli_query($db_connect,"select * from category where is_active = '1'");
+                                $rows = mysqli_fetch_all($data,true);
+                                $i = 1;
+                                foreach($rows as $row){
+                            ?>
+                            <option value="<?=$row['id']?>"><?=$row['name']?></option>
+                            <?php }?>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -86,8 +87,8 @@
                         <input type="number" class="form-control" id="inputNumber" name="number_of_employee">
                     </div>
                     <div class="col-md-8">
-                        <label for="inputState" class="form-label">Job type</label>
-                        <select id="inputState" class="form-select" name="job_type">
+                        <label for="inputType" class="form-label">Job type</label>
+                        <select id="inputType" class="form-select" name="job_type">
                         <option value="" selected disabled>Choose an option</option>
                         <option>Remote Job</option>
                         <option>Stable Job</option>
@@ -105,7 +106,70 @@
             </div>
         </div>
     </div>
+
 </div>
 <?php include('./layouts/footer.php')?>
+<script>
+    $("#closeModel").click(function(){
+        $(".text-danger").html(" ");
+    });
+    $("#addJob").submit(function(e){
+        e.preventDefault();
+        $("#addJob").validate({
+            rules:{
+                title : "required",
+                role : "required",
+                description : "required",
+                job_category : "required",
+                number_of_employee : "required",
+                job_type : "required",
+                city : "required"
+            },
+            messages:{
+                title : "Please enter job title.",
+                role : "Please enter employee role.",
+                description : "Please enter job description",
+                job_category : "Please select category",
+                number_of_employee : "Please enter vacency.",
+                job_type : "Please select job type",
+                city : "Please enter city"
+            },
+            errorClass: "text-danger",
+        });
+        let isValid = $("#addJob").valid();
+        if(isValid){
+            let formData = new FormData($("#addJob")[0]);
+            $.ajax({
+                url : "../controller/jobsController.php?task=add",
+                type : "POST",
+                dataType : "JSON",
+                cache: false,
+                async : true,
+                processData : false,
+                contentType: true,
+                data : formData,
+                success : function(data){
+                    if(data == 1){
+                        $("#add-job").modal('hide');
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Job has been added successfully.',
+                            icon: 'success',
+                            timer: 2000,
+                            showCancelButton: false,
+                            showConfirmButton: false
+                        });
+                        setTimeout(function(){
+                            window.location.reload;
+                        },2000)
+                    }else{
+                        alert("FAILED TO DELETE POST");
+                    };
+                }
+            });
+        }
+    });
+</script>
+
     <body>
 </html>
