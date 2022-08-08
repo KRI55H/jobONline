@@ -17,7 +17,7 @@ if(isset($_SESSION['username'])){
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center" style="width: 100vh; height: 100vh;">
-        <div class="container bg-dark text-light p-4" style="width: 50vh; border-radius: 4vh;">
+        <div class="container bg-dark text-light p-3" style="width: 60vh; border-radius: 4vh;">
             <form id="login" class="p-4">
                 <div class="mb-3">
                     <h4>Welcome back</h4>
@@ -79,7 +79,7 @@ if(isset($_SESSION['username'])){
             $username = isset($_GET['email']) ? $_GET['email'] : "";
             $password = isset($_GET['password']) ? $_GET['password'] : "";
             
-            $query = "SELECT * FROM users where email = '$username' AND password = '$password'";
+            $query = "SELECT * FROM users where email = '$username' AND password = '$password' AND role='admin'";
             $select = mysqli_query($db_connect,$query);
             $rows = mysqli_num_rows($select);
             if($rows == 1){
